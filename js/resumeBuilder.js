@@ -1,6 +1,3 @@
-/*
-This is empty on purpose! Your code to build the resume will go here.
- */
 var bio = {
     "name": "Yongxin Wang",
     "role": "Web Developer",
@@ -16,7 +13,7 @@ var bio = {
     "skills": [
         "html/css/js", "node", "meteor", "gulp","c++", "Algorithm", "machine learning", "matlab/octave", "python", "..."
     ],
-    "bioPic": "images/bio.jpeg"
+    "biopic": "images/bio.jpeg"
 };
 var education = {
     "schools": [
@@ -25,8 +22,17 @@ var education = {
             "degree": "Bachelor",
             "location": "Xi'an, Shaanxi, China",
             "majors":  ["communication engineering"],
-            "dates": "2012~2016"
+            "dates": "2012~2016",
+            "url": "http://www.xidian.edu.cn/"
         },
+    ],
+    "onlineCourses": [
+        {
+            "title": "front end web developer nanodegree",
+            "school": "udacity",
+            "dates": "2016/08~now",
+            "url": "https://classroom.udacity.com/nanodegrees/nd001/syllabus"
+        }
     ]
 };
 var work = {
@@ -78,7 +84,7 @@ bio.display = function() {
     var htmlEmail = HTMLemail.replace("%data%", bio.contacts.email);
     var htmlGithub = HTMLgithub.replace("%data%", bio.contacts.github);
     var htmlMoto = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
-    var bioImg = HTMLbioPic.replace("%data%", bio.bioPic);
+    var bioImg = HTMLbioPic.replace("%data%", bio.biopic);
     var twitter = HTMLtwitter.replace("%data%", bio.contacts.twitter);
     var blog = HTMLblog.replace("%data%", bio.contacts.blog);
     var mobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
@@ -92,8 +98,7 @@ bio.display = function() {
         var s = HTMLskills.replace("%data%", skill);
         $("#skills").append(s);
     });
-}
-
+};
 work.display = function() {
     work.jobs.forEach(function(job){
         $("#workExperience").append(HTMLworkStart);
@@ -107,7 +112,7 @@ work.display = function() {
         var htmlJobInfo = htmlEmployer + htmlTitle + htmlDate + htmlLocation + htmlDescription;
         $(".work-entry:last").append(htmlJobInfo);
     });
-}
+};
 education.display = function() {
     education.schools.forEach(function(school){
         $("#education").append(HTMLschoolStart);
@@ -116,7 +121,8 @@ education.display = function() {
         var htmlDegree = HTMLschoolDegree.replace("%data%", school.degree);
         var htmlDate =  HTMLonlineDates.replace("%data%", school.dates);
         var htmlMajor =  "";
-        var htmlLocation = HTMLschoolLocation.replace("%data%", school.location)
+        var htmlLocation = HTMLschoolLocation.replace("%data%", school.location);
+        var htmlurl = HTMLschoolURL.replace("%data%", school.url);
 
         if(school.majors.length > 0) {
             school.majors.forEach(function(major) {
@@ -124,11 +130,24 @@ education.display = function() {
                 htmlMajor += major;
             });
         }
-        var school = htmlName + htmlDegree + htmlDate + htmlLocation + htmlMajor;
-
+        var school = htmlName + htmlDegree + htmlDate + htmlLocation + htmlMajor + htmlurl;
         $(".education-entry:last").append(school);
     });
-}
+
+    $("#education").append(HTMLonlineClasses);
+
+    education.onlineCourses.forEach(function(Class) {
+        $("#education").append(HTMLschoolStart);
+
+        var title = HTMLonlineTitle.replace("%data%", Class.title);
+        var school = HTMLonlineSchool.replace("%data%", Class.school);
+        var dates = HTMLonlineDates.replace("%data%", Class.dates);
+        var url = HTMLonlineURL.replace("%data%", Class.url);
+        var onlineClass  = title + school +dates + url;
+
+        $(".education-entry:last").append(onlineClass);
+    });
+};
 projects.display = function() {
     projects.projects.forEach(function(project) {
         $("#projects").append(HTMLprojectStart);
@@ -151,7 +170,7 @@ projects.display = function() {
 
         $(".project-entry:last").append(project);
     });
-}
+};
 
 bio.display();
 projects.display();
